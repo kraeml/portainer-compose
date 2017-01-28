@@ -9,21 +9,27 @@ services:
     networks:
       - local
 
+  # Do not work! See https://github.com/portainer/portainer-compose/issues/7
   templates:
-    image: portainer/templates
+    build: templates/
     container_name: "portainer-templates"
+    ports:
+      - "8080:80"
     networks:
       - local
+    #volumes:
+    #  - "./templates/templates.json:/usr/share/nginx/html/templates.json"
 
   portainer:
     image: portainer/portainer
     container_name: "portainer-app"
+    #command: --templates http://templates/templates.json -d /data
     command: --templates http://templates/templates.json -d /data
     networks:
       - local
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/portainer/data:/data
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/opt/portainer/data:/data"
 
   watchtower:
     image: centurylink/watchtower
