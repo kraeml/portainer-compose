@@ -24,7 +24,7 @@ services:
     image: portainer/portainer
     container_name: "portainer-app"
     #command: --templates http://templates/templates.json -d /data
-    command: --templates http://templates/templates.json -d /data
+    command: --templates https://raw.githubusercontent.com/kraeml/portainer-compose/develop/templates/templates.json -d /data
     networks:
       - local
     volumes:
